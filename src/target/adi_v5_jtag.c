@@ -287,9 +287,11 @@ static int jtagdp_transaction_endcheck(struct adiv5_dap *dap)
 					dap->ap_csw_value,
 					dap->ap_tar_value);
 
+#ifndef NO_DAP_CHECK
 			if (ctrlstat & SSTICKYORUN)
 				LOG_ERROR("JTAG-DP OVERRUN - check clock, "
 					"memaccess, or reduce jtag speed");
+#endif
 
 			if (ctrlstat & SSTICKYERR)
 				LOG_ERROR("JTAG-DP STICKY ERROR");
@@ -324,8 +326,13 @@ static int jtagdp_transaction_endcheck(struct adiv5_dap *dap)
 			retval = jtag_execute_queue();
 			if (retval != ERROR_OK)
 				return retval;
+#ifndef NO_DAP_CHECK
 			LOG_ERROR("MEM_AP_CSW 0x%" PRIx32 ", MEM_AP_TAR 0x%"
 					PRIx32, mem_ap_csw, mem_ap_tar);
+#else
+			LOG_DEBUG("MEM_AP_CSW 0x%" PRIx32 ", MEM_AP_TAR 0x%"
+					PRIx32, mem_ap_csw, mem_ap_tar);
+#endif
 
 		}
 		retval = jtag_execute_queue();
