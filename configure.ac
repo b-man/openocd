@@ -508,8 +508,8 @@ AC_ARG_ENABLE([libusb0],
   [check_libusb0=$enableval], [check_libusb0=no])
 
 AC_ARG_ENABLE([disable-dap-check],
-  AS_HELP_STRING([--disable-dap-check], [Disable dap check if CPU is in power saving mode to aviod polling failure (needed for Snowball board)]),
-  [enable_disable-dap-check=$enableval], [enable_disable-dap-check=no]) 
+  AS_HELP_STRING([--disable-dap-check], [Disable dap check if CPU is in power saving mode to avoid polling failure (needed for Snowball board)]),
+  [enable_disable_dap_check=$enableval], [enable_disable_dap_check=no]) 
 
 build_minidriver=no
 AC_MSG_CHECKING([whether to enable ZY1000 minidriver])
@@ -1173,10 +1173,10 @@ if test $build_usb = yes -o $build_usb_ng = yes; then
 fi
 
 # Check if we want to disable dap power check for polling in power saving mode
-use_disable-dap-check=no
-if test $enable_disable-dap-check = yes
+use_disable_dap_check=no
+if test $enable_disable_dap_check = yes
 then
-  use_disable-dap-check=yes
+  use_disable_dap_check=yes
 fi
 
 AM_CONDITIONAL([RELEASE], [test $build_release = yes])
@@ -1226,7 +1226,7 @@ AM_CONDITIONAL([MINIDRIVER_DUMMY], [test $build_minidriver_dummy = yes])
 
 AM_CONDITIONAL([INTERNAL_JIMTCL], [test $use_internal_jimtcl = yes])
 
-AM_CONDITIONAL([NO_DAP_CHECK], [test $use_disable-dap-check = yes])
+AM_CONDITIONAL([NO_DAP_CHECK], [test $use_disable_dap_check = yes])
 
 # Look for environ alternatives.  Possibility #1: is environ in unistd.h or stdlib.h?
 AC_MSG_CHECKING([for environ in unistd.h and stdlib.h])
