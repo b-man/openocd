@@ -816,6 +816,12 @@ else
   AC_DEFINE([BUILD_OPENDOUS], [0], [0 if you don't want the estick/opendous JTAG driver.])
 fi
 
+if test $enable_disable_dap_check = yes; then
+  AC_DEFINE([NO_DAP_CHECK], [1], [1 if you want to disable dap power check.])
+else
+  AC_DEFINE([NO_DAP_CHECK], [0], [0 if you don't want to disable dap power check.])
+fi
+
 if test "$use_internal_jimtcl" = yes; then
   if test -f "$srcdir/jimtcl/configure.ac"; then
     AX_CONFIG_SUBDIR_OPTION([jimtcl], [--disable-install-jim])
