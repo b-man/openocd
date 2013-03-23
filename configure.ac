@@ -507,10 +507,6 @@ AC_ARG_ENABLE([libusb0],
   AS_HELP_STRING([--enable-libusb0], [Use libusb-0.1 library for USB JTAG devices]),
   [check_libusb0=$enableval], [check_libusb0=no])
 
-AC_ARG_ENABLE([disable-dap-check],
-  AS_HELP_STRING([--disable-dap-check], [Disable dap check if CPU is in power saving mode to avoid polling failure (needed for Snowball board)]),
-  [enable_disable_dap_check=$enableval], [enable_disable_dap_check=no]) 
-
 build_minidriver=no
 AC_MSG_CHECKING([whether to enable ZY1000 minidriver])
 if test $build_zy1000 = yes; then
@@ -814,12 +810,6 @@ if test $build_opendous = yes; then
   AC_DEFINE([BUILD_OPENDOUS], [1], [1 if you want the estick/opendous JTAG driver.])
 else
   AC_DEFINE([BUILD_OPENDOUS], [0], [0 if you don't want the estick/opendous JTAG driver.])
-fi
-
-if test $enable_disable_dap_check = yes; then
-  AC_DEFINE([NO_DAP_CHECK], [1], [1 if you want to disable dap power check.])
-else
-  AC_DEFINE([NO_DAP_CHECK], [0], [0 if you don't want to disable dap power check.])
 fi
 
 if test "$use_internal_jimtcl" = yes; then
@@ -1178,13 +1168,6 @@ if test $build_usb = yes -o $build_usb_ng = yes; then
   fi
 fi
 
-# Check if we want to disable dap power check for polling in power saving mode
-use_disable_dap_check=no
-if test $enable_disable_dap_check = yes
-then
-  use_disable_dap_check=yes
-fi
-
 AM_CONDITIONAL([RELEASE], [test $build_release = yes])
 AM_CONDITIONAL([PARPORT], [test $build_parport = yes])
 AM_CONDITIONAL([DUMMY], [test $build_dummy = yes])
@@ -1231,8 +1214,6 @@ AM_CONDITIONAL([MINIDRIVER], [test $build_minidriver = ye]s)
 AM_CONDITIONAL([MINIDRIVER_DUMMY], [test $build_minidriver_dummy = yes])
 
 AM_CONDITIONAL([INTERNAL_JIMTCL], [test $use_internal_jimtcl = yes])
-
-AM_CONDITIONAL([NO_DAP_CHECK], [test $use_disable_dap_check = yes])
 
 # Look for environ alternatives.  Possibility #1: is environ in unistd.h or stdlib.h?
 AC_MSG_CHECKING([for environ in unistd.h and stdlib.h])

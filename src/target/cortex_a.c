@@ -801,7 +801,7 @@ static int cortex_a8_poll(struct target *target)
 	retval = mem_ap_sel_read_atomic_u32(swjdp, armv7a->debug_ap,
 			armv7a->debug_base + CPUDBG_DSCR, &dscr);
 	if (retval != ERROR_OK)
-#ifndef NO_DAP_CHECK
+#if 0
 		return retval;
 #else
 		return ERROR_OK;
